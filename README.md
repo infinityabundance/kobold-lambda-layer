@@ -58,7 +58,10 @@ unchanged; only the transport differs.
 ## Reference architecture
 
 ```text
-Mainframe VSAM/flat export ─(Transfer Family; EBCDIC→ASCII early)─► S3 landing
+Mainframe VSAM/flat export ─(Transfer Family / Direct Connect)─► S3 landing
+   ├─ option A: pre-convert EBCDIC→ASCII upstream
+   └─ option B: keep cp500 DISPLAY bytes; decode in-shim with --encoding cp500
+       (binary/packed fields remain RAW storage in either path — never text-converted)
    └─(ObjectCreated)─► Step Functions ─► Lambda(kobold-lambda) | Batch/Glue(kobold-batch container)
                                               │  decode byte-exact, emit JSON + audit (raw_hex, unsupported)
                                               ▼
