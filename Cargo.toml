@@ -1,0 +1,36 @@
+[package]
+name = "kobold-lambda-layer"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.74"
+description = "Serverless packaging for the verifiable COBOL record decoder: a batch-decode core (offline-testable) plus an AWS Lambda handler (feature-gated) that turns S3 fixed-length COBOL records into structured JSON + per-record parity/audit, via kobold-data-shim / gnucobol-rs."
+license = "Apache-2.0"
+authors = ["infinityabundance"]
+repository = "https://github.com/infinityabundance/kobold-lambda-layer"
+readme = "README.md"
+publish = false
+
+[dependencies]
+kobold-data-shim = "0.1.1"
+
+# AWS Lambda handler deps — optional, behind the `lambda` feature so the default build (lib + the
+# offline `kobold-batch` CLI) needs no AWS crates and stays quick to compile/test.
+lambda_runtime = { version = "0.13", optional = true }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"], optional = true }
+serde_json = { version = "1", optional = true }
+
+[features]
+default = []
+lambda = ["dep:lambda_runtime", "dep:tokio", "dep:serde_json"]
+
+[[bin]]
+name = "kobold-batch"
+path = "src/bin/batch.rs"
+
+[[bin]]
+name = "kobold-lambda"
+path = "src/bin/lambda.rs"
+required-features = ["lambda"]
+
+[lints.rust]
+unsafe_code = "forbid"

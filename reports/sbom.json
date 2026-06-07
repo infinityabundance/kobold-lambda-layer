@@ -1,0 +1,10 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "metadata": { "component": { "type": "application", "name": "kobold-lambda-layer", "version": "0.1.0", "licenses": [{ "license": { "id": "Apache-2.0" } }] } },
+  "components": [
+    { "type": "library", "name": "kobold-data-shim", "version": "0.1.1", "licenses": [{ "license": { "id": "Apache-2.0" } }] },
+    { "type": "library", "name": "gnucobol-rs", "version": "0.2.4", "licenses": [{ "license": { "id": "LGPL-3.0-or-later" } }], "description": "Oracle-proven GnuCOBOL 3.2 compatibility courts." }
+  ],
+  "_note": "Default build runtime closure = kobold-data-shim + gnucobol-rs (zero further runtime deps). The `lambda` feature additionally pulls lambda_runtime/tokio/serde_json (build with --features lambda)."
+}

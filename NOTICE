@@ -1,0 +1,15 @@
+kobold-lambda-layer
+Copyright 2026 infinityabundance
+
+This product's own source code is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It links `kobold-data-shim` (Apache-2.0), which in turn links `gnucobol-rs`
+(LGPL-3.0-or-later, a faithful derivative port of GnuCOBOL's libcob). Therefore any DISTRIBUTED
+BINARY produced here — a Lambda zip/layer, a container image — is a "Combined Work" under LGPL-3.0
+section 4. To distribute it you must: give prominent notice gnucobol-rs is used; provide the means
+to relink against a modified gnucobol-rs (shipping this crate's source/objects suffices); and convey
+the LGPL-3.0 text with the gnucobol-rs source.
+
+A future clean-room, permissively licensed decimal/layout kernel would remove this obligation for
+fully-permissive Lambda/container distribution. It does not exist yet.
+See https://github.com/infinityabundance/gnucobol-rs .
