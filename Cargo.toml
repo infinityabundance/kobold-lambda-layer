@@ -8,7 +8,8 @@ license = "Apache-2.0"
 authors = ["infinityabundance"]
 repository = "https://github.com/infinityabundance/kobold-lambda-layer"
 readme = "README.md"
-publish = false
+keywords = ["cobol", "aws-lambda", "serverless", "mainframe", "migration"]
+categories = ["command-line-utilities", "encoding"]
 
 [dependencies]
 kobold-data-shim = "0.1.1"

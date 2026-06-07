@@ -79,4 +79,4 @@ deploy steps as a verified-to-compile starting point, not a tested deployment. S
 
 Apache-2.0 (`LICENSE`). Links `kobold-data-shim` (Apache-2.0) → `gnucobol-rs` (LGPL-3.0+) — any
 distributed binary (Lambda zip/layer, container) is a Combined Work under LGPL-3.0 §4; see
-[`NOTICE`](NOTICE). Not published to crates.io (a deployment artifact). `publish = false`.
+[`NOTICE`](NOTICE).
