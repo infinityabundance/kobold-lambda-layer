@@ -1,5 +1,7 @@
 # kobold-lambda-layer
 
+<img src="assets/kobold_data_shim.png" width="200">
+
 **Serverless packaging for the verifiable COBOL decoder.** Turns a buffer of fixed-length COBOL
 records (from an S3 export) into structured JSON **plus a per-record audit** — raw bytes and any
 `unsupported` fields — by decoding each record byte-exactly through the oracle-proven
