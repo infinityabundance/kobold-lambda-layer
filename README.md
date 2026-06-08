@@ -80,6 +80,14 @@ The offline core and CLI are tested here. The Lambda handler **type-checks again
 deploy steps as a verified-to-compile starting point, not a tested deployment. See
 [`docs/enterprise-readiness.md`](docs/enterprise-readiness.md) for SBOM / CVE / SLA.
 
+**LAMBDA.LIVE.1 (staged).** [`lab/lambda-live/`](lab/lambda-live/) holds the harness to close this gap:
+`baseline.sh` computes the **local** output hash for a synthetic payload from the offline core
+(`kobold-batch`, identical to the handler's `process_records`), and `deploy-and-invoke.sh` is staged to
+deploy once + invoke once + compare the **live** output hash — gated on AWS credentials. Until a live run
+exists, [`reports/LAMBDA-LIVE-1-receipt.json`](reports/LAMBDA-LIVE-1-receipt.json) records
+`status: awaiting_live_invocation` with the local baseline present and the live request id absent. The
+acceptance is simply `live output_sha256 == local output_sha256`; **no production-readiness is claimed.**
+
 ## License
 
 Apache-2.0 (`LICENSE`). Links `kobold-data-shim` (Apache-2.0) → `gnucobol-rs` (LGPL-3.0+) — any

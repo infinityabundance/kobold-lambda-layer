@@ -1,0 +1,32 @@
+{
+  "schema": "lambda-live-receipt-v1",
+  "court": "LAMBDA.LIVE.1",
+  "status": "awaiting_live_invocation",
+  "local_baseline": {
+    "payload_sha256": "b00574cbdaa954dc1effb319283648dc9e207d6d29107850a9e5d5dd3b449a87",
+    "output_sha256": "2baae3860d52605b074c435ea5a9ea41d121bc84d83a05b17ba4b822f304ef0b",
+    "records": 3,
+    "computed_by": "kobold-batch (offline core; identical to the Lambda handler's process_records/record_to_json)",
+    "command": "bash lab/lambda-live/baseline.sh"
+  },
+  "live_invocation": {
+    "request_id": null,
+    "region": null,
+    "runtime": null,
+    "memory_mb": null,
+    "duration_ms": null,
+    "cold_start": null,
+    "output_sha256": null
+  },
+  "acceptance": "live_invocation.output_sha256 == local_baseline.output_sha256",
+  "verdict": "local_baseline_present_live_pending",
+  "production_readiness_claim": false,
+  "how_to_run_live": "lab/lambda-live/deploy-and-invoke.sh (requires AWS credentials)",
+  "non_claims": [
+    "not deployed to live AWS",
+    "not invoked on live AWS in repo CI",
+    "not a production-load proof",
+    "single synthetic 3-record payload only",
+    "no semantic authority -- decode correctness is gnucobol-rs/kobold-data-shim, not this layer"
+  ]
+}
