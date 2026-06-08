@@ -80,13 +80,21 @@ The offline core and CLI are tested here. The Lambda handler **type-checks again
 deploy steps as a verified-to-compile starting point, not a tested deployment. See
 [`docs/enterprise-readiness.md`](docs/enterprise-readiness.md) for SBOM / CVE / SLA.
 
-**LAMBDA.LIVE.1 (staged).** [`lab/lambda-live/`](lab/lambda-live/) holds the harness to close this gap:
-`baseline.sh` computes the **local** output hash for a synthetic payload from the offline core
-(`kobold-batch`, identical to the handler's `process_records`), and `deploy-and-invoke.sh` is staged to
-deploy once + invoke once + compare the **live** output hash — gated on AWS credentials. Until a live run
-exists, [`reports/LAMBDA-LIVE-1-receipt.json`](reports/LAMBDA-LIVE-1-receipt.json) records
-`status: awaiting_live_invocation` with the local baseline present and the live request id absent. The
-acceptance is simply `live output_sha256 == local output_sha256`; **no production-readiness is claimed.**
+**LAMBDA.LIVE.1 (awaiting live invocation — harness complete).** [`lab/lambda-live/`](lab/lambda-live/)
+holds the full harness: `baseline.sh` computes the **local** baseline — the *canonical* (sorted-key,
+serialization-order-independent) sha256 of the decoded records — from the offline core (`kobold-batch`,
+identical to the handler's `process_records`/`record_to_json`), and `deploy-and-invoke.sh` is a **complete,
+executable** end-to-end run: it deploys the function once, invokes it once with the synthetic
+[`event.json`](lab/lambda-live/event.json), canonicalizes the live response's `.results` the **same way**
+(so the gate is meaningful across JSON ordering), captures the request id / region / account / runtime /
+architecture / memory / billed duration / cold-start / CloudWatch log group, compares
+`live == local_baseline`, **writes the receipt** from the real captured values, and **deletes the function**
+(cleanup recorded). Without AWS credentials it exits `5` with `awaiting_live_invocation` and **leaves the
+committed receipt untouched** — no fabricated request ids or hashes.
+[`reports/LAMBDA-LIVE-1-receipt.json`](reports/LAMBDA-LIVE-1-receipt.json) therefore carries the **real**
+local baseline with every live field `null` until a credentialed run fills them. The acceptance is
+`live_invocation.output_sha256 == local_baseline.output_sha256`; **no production-readiness, cost, SLA, or
+throughput is claimed.**
 
 ## License
 

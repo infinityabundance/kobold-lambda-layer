@@ -1,0 +1,5 @@
+{
+  "copybook": "       01 R.\n           05 ID     PIC 9(3).\n           05 NAME   PIC X(4).\n           05 STATUS PIC X.\n",
+  "record_len": 8,
+  "records_b64": "MDAxQU5OIEEwMDJCT0IgQzAwM0NBVCBE"
+}

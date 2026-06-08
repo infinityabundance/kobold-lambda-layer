@@ -4,29 +4,37 @@
   "status": "awaiting_live_invocation",
   "local_baseline": {
     "payload_sha256": "b00574cbdaa954dc1effb319283648dc9e207d6d29107850a9e5d5dd3b449a87",
-    "output_sha256": "2baae3860d52605b074c435ea5a9ea41d121bc84d83a05b17ba4b822f304ef0b",
+    "output_sha256": "9269bb03d6d9004dcb29b9e1ffe34628858dfb901cd77132812cb4a271a2b9a7",
     "records": 3,
-    "computed_by": "kobold-batch (offline core; identical to the Lambda handler's process_records/record_to_json)",
+    "comparison": "canonical (sorted-key) sha256 of the decoded records; serialization-order-independent",
+    "computed_by": "kobold-batch (offline core; identical process_records/record_to_json to the Lambda handler)",
     "command": "bash lab/lambda-live/baseline.sh"
   },
   "live_invocation": {
     "request_id": null,
     "region": null,
+    "account_id": null,
     "runtime": null,
+    "architecture": null,
+    "function_version": null,
     "memory_mb": null,
-    "duration_ms": null,
+    "billed_duration_ms": null,
     "cold_start": null,
-    "output_sha256": null
+    "output_sha256": null,
+    "cloudwatch_log_group": null,
+    "cleanup_status": null
   },
   "acceptance": "live_invocation.output_sha256 == local_baseline.output_sha256",
   "verdict": "local_baseline_present_live_pending",
   "production_readiness_claim": false,
-  "how_to_run_live": "lab/lambda-live/deploy-and-invoke.sh (requires AWS credentials)",
+  "how_to_run_live": "lab/lambda-live/deploy-and-invoke.sh (requires AWS credentials; deploys once, invokes once, captures metadata, compares canonically, writes this receipt, deletes the function)",
   "non_claims": [
-    "not deployed to live AWS",
+    "not deployed to live AWS yet",
     "not invoked on live AWS in repo CI",
     "not a production-load proof",
     "single synthetic 3-record payload only",
-    "no semantic authority -- decode correctness is gnucobol-rs/kobold-data-shim, not this layer"
+    "one deploy + one invoke, then deleted",
+    "no semantic authority -- decode correctness is gnucobol-rs/kobold-data-shim, not this layer",
+    "not a cost/SLA/throughput claim (see GLUE/LAMBDA.SCALE.1, future)"
   ]
 }
